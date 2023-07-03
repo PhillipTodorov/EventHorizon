@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EventHorizonBackend.Migrations
 {
     [DbContext(typeof(EventHorizonDbContext))]
-    [Migration("20230625162852_AddIdentity")]
-    partial class AddIdentity
+    [Migration("20230702170924_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
