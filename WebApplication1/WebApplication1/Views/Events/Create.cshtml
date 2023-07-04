@@ -1,0 +1,17 @@
+﻿@model EventHorizonBackend.Models.Event
+
+<h2>Create Event</h2>
+
+<form asp-action="Create">
+    <div class="form-group">
+        <label asp-for="Title" class="control-label">Event Name</label>
+        <input asp-for="Title" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Date" class="control-label">Event Date</label>
+        <input asp-for="Date" class="form-control" />
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Create" class="btn btn-primary" />
+    </div>
+</form>
