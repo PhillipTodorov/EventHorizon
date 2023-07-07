@@ -14,8 +14,8 @@ namespace EventHorizonBackend.Data
 
         //public DbSet<BlogPost> BlogPosts { get; set; }
         //public DbSet<Tag> Tags { get; set; }
-        public DbSet<UserEvent> UserEvents { get; set; }
-        public DbSet<Event> Events { get; set; }
+        public virtual DbSet<UserEvent> UserEvents { get; set; }
+        public virtual DbSet<Event> Events { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -35,6 +35,10 @@ namespace EventHorizonBackend.Data
                 .HasOne(ue => ue.Event)
                 .WithMany(e => e.UserEvents)
                 .HasForeignKey(ue => ue.EventId);
+        }
+        public void SetModifiedState(object entity)
+        {
+            Entry(entity).State = EntityState.Modified;
         }
     }
 }

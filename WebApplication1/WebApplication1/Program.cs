@@ -1,4 +1,5 @@
 using EventHorizonBackend.Data;
+using EventHorizonBackend.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using System;

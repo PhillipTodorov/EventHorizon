@@ -10,12 +10,13 @@ namespace EventHorizonBackend.Controllers.Events
     [ApiController]
     public class EventsController : ControllerBase
     {
-        private readonly EventHorizonDbContext _context;
+        private readonly IEventHorizonDbContext _context;
 
-        public EventsController(EventHorizonDbContext context)
+        public EventsController(IEventHorizonDbContext context)
         {
             _context = context;
         }
+
 
         // GET: api/Events
         [HttpGet]
@@ -47,7 +48,7 @@ namespace EventHorizonBackend.Controllers.Events
                 return BadRequest();
             }
 
-            _context.Entry(eventItem).State = EntityState.Modified;
+            _context.SetModifiedState(eventItem);
             await _context.SaveChangesAsync();
 
             return NoContent();

@@ -24,11 +24,11 @@ namespace EventHorizonBackend.Controllers.UserEvents
             return await _context.UserEvents.ToListAsync();
         }
 
-        // GET: api/UserEvents/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<UserEvent>> GetUserEvent(int id)
+        // GET: api/UserEvents/userId/eventId
+        [HttpGet("{userId}/{eventId}")]
+        public async Task<ActionResult<UserEvent>> GetUserEvent(int userId, int eventId)
         {
-            var userEvent = await _context.UserEvents.FindAsync(id);
+            var userEvent = await _context.UserEvents.FindAsync(userId, eventId);
 
             if (userEvent == null)
             {
@@ -38,11 +38,12 @@ namespace EventHorizonBackend.Controllers.UserEvents
             return userEvent;
         }
 
-        // PUT: api/UserEvents/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutUserEvent(int id, UserEvent userEvent)
+
+        // PUT: api/UserEvents/userId/eventId
+        [HttpPut("{userId}/{eventId}")]
+        public async Task<IActionResult> PutUserEvent(int userId, int eventId, UserEvent userEvent)
         {
-            if (id != userEvent.Id)
+            if (userId != userEvent.UserId || eventId != userEvent.EventId)
             {
                 return BadRequest();
             }
@@ -60,14 +61,14 @@ namespace EventHorizonBackend.Controllers.UserEvents
             _context.UserEvents.Add(userEvent);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetUserEvent), new { id = userEvent.Id }, userEvent);
+            return CreatedAtAction(nameof(GetUserEvent), new { userId = userEvent.UserId, eventId = userEvent.EventId }, userEvent);
         }
 
-        // DELETE: api/UserEvents/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUserEvent(int id)
+        // DELETE: api/UserEvents/userId/eventId
+        [HttpDelete("{userId}/{eventId}")]
+        public async Task<IActionResult> DeleteUserEvent(int userId, int eventId)
         {
-            var userEvent = await _context.UserEvents.FindAsync(id);
+            var userEvent = await _context.UserEvents.FindAsync(userId, eventId);
             if (userEvent == null)
             {
                 return NotFound();
@@ -78,5 +79,6 @@ namespace EventHorizonBackend.Controllers.UserEvents
 
             return NoContent();
         }
+
     }
 }
