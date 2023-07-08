@@ -36,7 +36,7 @@ namespace EventHorizonBackend.Controllers.Events
                 return NotFound();
             }
 
-            return eventItem;
+            return Ok(eventItem);
         }
 
         // PUT: api/Events/5
