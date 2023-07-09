@@ -6,14 +6,11 @@ using Microsoft.AspNetCore.Identity;
 
 namespace EventHorizonBackend.Data
 {
-    public class EventHorizonDbContext : IdentityDbContext<IdentityUser>
+    public class EventHorizonDbContext : IdentityDbContext<IdentityUser>, IEventHorizonDbContext
     {
         public EventHorizonDbContext(DbContextOptions options) : base(options)
         {
         }
-
-        //public DbSet<BlogPost> BlogPosts { get; set; }
-        //public DbSet<Tag> Tags { get; set; }
         public virtual DbSet<UserEvent> UserEvents { get; set; }
         public virtual DbSet<Event> Events { get; set; }
 
@@ -39,6 +36,10 @@ namespace EventHorizonBackend.Data
         public void SetModifiedState(object entity)
         {
             Entry(entity).State = EntityState.Modified;
+        }
+        public new async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            return await base.SaveChangesAsync(cancellationToken);
         }
     }
 }

@@ -12,6 +12,7 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<EventHorizonDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("EventHorizonDbConnectionString")));
+builder.Services.AddScoped<IEventHorizonDbContext, EventHorizonDbContext>();
 
 builder.Services.AddDefaultIdentity<IdentityUser>()
     .AddRoles<IdentityRole>()

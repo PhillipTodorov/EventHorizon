@@ -1,27 +1,11 @@
-<!-- add-event.component.html -->
-<!--<h2>Add Event</h2>
-
-<form [formGroup]="eventForm" (ngSubmit)="onSubmit()">
-  <div>
-    <label for="title">Title:</label>
-    <input type="text" id="title" formControlName="title" required>
-    <div *ngIf="eventForm.get('title').invalid && eventForm.get('title').touched">
-      <div *ngIf="eventForm.get('title').errors.required">Title is required.</div>
-    </div>
+<form #eventForm="ngForm" (ngSubmit)="addEvent(eventForm.value)">
+  <div class="form-group">
+    <label for="eventName">Event Name</label>
+    <input type="text" id="eventName" [(ngModel)]="event.name" name="name" required>
   </div>
-
-  <div>
-    <label for="description">Description:</label>
-    <textarea id="description" formControlName="description" rows="4"></textarea>
+  <div class="form-group">
+    <label for="eventDate">Event Date</label>
+    <input type="date" id="eventDate" [(ngModel)]="event.date" name="date" required>
   </div>
-
-  <div>
-    <label for="date">Date:</label>
-    <input type="date" id="date" formControlName="date" required>
-    <div *ngIf="eventForm.get('date').invalid && eventForm.get('date').touched">
-      <div *ngIf="eventForm.get('date').errors.required">Date is required.</div>
-    </div>
-  </div>
-
-  <button type="submit" [disabled]="eventForm.invalid">Add Event</button>
-</form>-->
+  <button type="submit">Add Event</button>
+</form>
