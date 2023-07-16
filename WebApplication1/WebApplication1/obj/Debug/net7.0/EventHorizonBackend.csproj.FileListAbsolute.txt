@@ -524,3 +524,5 @@ C:\Users\phtod\Desktop\EventHorizon\WebApplication1\WebApplication1\obj\Debug\ne
 C:\Users\phtod\Desktop\EventHorizon\WebApplication1\WebApplication1\obj\Debug\net7.0\ref\EventHorizonBackend.dll
 C:\Users\phtod\Desktop\EventHorizon\WebApplication1\WebApplication1\bin\Debug\net7.0\Castle.Core.dll
 C:\Users\phtod\Desktop\EventHorizon\WebApplication1\WebApplication1\bin\Debug\net7.0\Moq.dll
+C:\Users\phtod\Desktop\EventHorizon\WebApplication1\WebApplication1\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\phtod\Desktop\EventHorizon\WebApplication1\WebApplication1\bin\Debug\net7.0\NLog.dll

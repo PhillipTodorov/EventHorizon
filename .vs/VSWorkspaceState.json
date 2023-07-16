@@ -1,0 +1,15 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\my-app\\.angular",
+    "\\my-app\\src",
+    "\\my-app\\src\\app",
+    "\\my-app\\src\\app\\add-event",
+    "\\my-app\\src\\app\\events",
+    "\\WebApplication1",
+    "\\WebApplication1\\WebApplication1",
+    "\\WebApplication1\\WebApplication1\\Models"
+  ],
+  "SelectedNode": "\\WebApplication1\\EventHorizonBackend.sln",
+  "PreviewInSolutionExplorer": false
+}

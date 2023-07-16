@@ -1,48 +1,81 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using EventHorizonBackend.Models;
+using System.Threading.Tasks;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using Microsoft.IdentityModel.Tokens;
+using static EventHorizonBackend.Controllers.UsersController;
+using System.Text;
+using System.ComponentModel.DataAnnotations;
 
 namespace EventHorizonBackend.Controllers
 {
-    public class UsersController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class UsersController : ControllerBase
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly IConfiguration _config;
 
-        public UsersController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        public UsersController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, IConfiguration config)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _config = config;
         }
 
-        public IActionResult Index()
+        // Define a DTO for the registration model
+        public class RegisterDto
         {
-            return View();
+            [Required]
+            [EmailAddress]
+            [Display(Name = "Email")]
+            public string Email { get; set; }
+
+            [Required]
+            [DataType(DataType.Password)]
+            [Display(Name = "Password")]
+            public string Password { get; set; }
         }
 
-        public IActionResult Register()
+
+        // Define a DTO for the login model
+        public class LoginDto
         {
-            return View();
+            [Required]
+            [EmailAddress]
+            [Display(Name = "Email")]
+            public string Email { get; set; }
+
+            [Required]
+            [DataType(DataType.Password)]
+            [Display(Name = "Password")]
+            public string Password { get; set; }
         }
 
-        public IActionResult Login()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Register(RegisterViewModel model)
+        // POST: api/Users/register
+        [HttpPost("register")]
+        public async Task<ActionResult<IdentityUser>> Register(RegisterDto model)
         {
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser { UserName = model.Email, Email = model.Email };
+                var user = await _userManager.FindByEmailAsync(model.Email);
+                if (user != null)
+                {
+                    ModelState.AddModelError(string.Empty, "Email already in use.");
+                    return BadRequest(ModelState);
+                }
+
+                user = new IdentityUser { UserName = model.Email, Email = model.Email };
                 var result = await _userManager.CreateAsync(user, model.Password);
 
                 if (result.Succeeded)
                 {
                     await _userManager.AddToRoleAsync(user, "User");
                     await _signInManager.SignInAsync(user, isPersistent: false);
-                    return RedirectToAction("Index", "Home");
+                    return user;
                 }
 
                 foreach (var error in result.Errors)
@@ -51,34 +84,66 @@ namespace EventHorizonBackend.Controllers
                 }
             }
 
-            return View(model);
+            return BadRequest(ModelState);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel model)
+
+        // POST: api/Users/login
+        [HttpPost("login")]
+        public async Task<ActionResult> Login(LoginDto model)
         {
-            if (ModelState.IsValid)
+            try
             {
-                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
-                if (result.Succeeded)
+                if (ModelState.IsValid)
                 {
-                    return RedirectToAction("Index", "Home");
+                    var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, lockoutOnFailure: false);
+                    if (result.Succeeded)
+                    {
+                        var user = await _userManager.FindByEmailAsync(model.Email);
+
+                        // Create a token handler
+                        var tokenHandler = new JwtSecurityTokenHandler();
+
+                        // Generate a Key
+                        var key = Encoding.ASCII.GetBytes(_config["Jwt:Key"]); // Get the key from your appsettings.json
+
+                        // Create a descriptor for the token
+                        var tokenDescriptor = new SecurityTokenDescriptor
+                        {
+                            Subject = new ClaimsIdentity(new[] { new Claim("id", user.Id) }),
+                            Expires = DateTime.UtcNow.AddDays(7), // Token expiration, set it to your desired timeframe.
+                            SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                        };
+
+                        // Create the token
+                        var token = tokenHandler.CreateToken(tokenDescriptor);
+
+                        // Write the token
+                        var jwtToken = tokenHandler.WriteToken(token);
+
+                        return Ok(new { token = jwtToken });
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    }
                 }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                    return View(model);
-                }
+
+                return BadRequest(ModelState);
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
 
-            return View(model);
+                return StatusCode(500, "Internal server error");
+            }
         }
-
-        [HttpPost]
-        public async Task<IActionResult> Logout()
+        // POST: api/Users/logout
+        [HttpPost("logout")]
+        public async Task<ActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction("Index", "Home");
+            return Ok();
         }
     }
 }

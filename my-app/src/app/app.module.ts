@@ -8,13 +8,17 @@ import { AddEventComponent } from './add-event/add-event.component';
 import { EventsComponent } from './events/events.component';
 import { EventService } from './event.service';
 import { AppRoutingModule } from './app-routing.module';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     EventsComponent,
-    AddEventComponent
+    AddEventComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
