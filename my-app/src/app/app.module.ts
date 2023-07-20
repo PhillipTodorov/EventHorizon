@@ -6,10 +6,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { AddEventComponent } from './add-event/add-event.component';
 import { EventsComponent } from './events/events.component';
-import { EventService } from './event.service';
+import { EventService } from './services/event.service';
 import { AppRoutingModule } from './app-routing.module';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { ErrorHandlingService } from './services/error-handling.service';
+import { HomeComponent } from './home/home.component';  
 
 
 @NgModule({
@@ -18,7 +20,8 @@ import { RegisterComponent } from './register/register.component';
     EventsComponent,
     AddEventComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -26,7 +29,7 @@ import { RegisterComponent } from './register/register.component';
     HttpClientModule, 
     AppRoutingModule, 
   ],
-  providers: [EventService], 
+  providers: [EventService, ErrorHandlingService], 
   bootstrap: [AppComponent]
 })
 export class AppModule { }

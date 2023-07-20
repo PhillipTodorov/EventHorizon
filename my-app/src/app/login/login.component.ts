@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../User/user.service';
+import { Router } from '@angular/router';
+import { ErrorHandlingService } from '../services/error-handling.service';
 
 @Component({
   selector: 'app-login',
@@ -10,7 +12,11 @@ export class LoginComponent implements OnInit {
   email: string;
   password: string;
 
-  constructor(private userService: UserService) {
+  constructor(
+    private userService: UserService, 
+    private router: Router,
+    private errorHandlingService: ErrorHandlingService
+  ) {
     this.email = '';
     this.password = '';
   }
@@ -18,13 +24,18 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  login() {
+  login(): void {
     this.userService.login(this.email, this.password).subscribe(
-      (data: any) => {
-        // handle successful login
+      data => {
+        // on success, redirect to home page
+        this.router.navigate(['/home']);
       },
-      (error: any) => {
-        // handle error
+      error => {
+        if (error.status === 400) {
+          alert(this.errorHandlingService.determineErrorMessage(error)); 
+        } else {
+          console.error('Error in login', error);
+        }
       }
     );
   }
