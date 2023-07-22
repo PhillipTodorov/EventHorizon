@@ -10,6 +10,8 @@ import { EventService } from './event.service';
 import { AppRoutingModule } from './app-routing.module';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { HomeComponent } from './home/home.component';
+import { MatCardModule } from '@angular/material/card';
 
 
 @NgModule({
@@ -18,13 +20,15 @@ import { RegisterComponent } from './register/register.component';
     EventsComponent,
     AddEventComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule, 
-    AppRoutingModule, 
+    AppRoutingModule,
+    MatCardModule, 
   ],
   providers: [EventService], 
   bootstrap: [AppComponent]

@@ -38,4 +38,15 @@ export class UserService {
 
     return this.http.post<any>('https://localhost:7194/api/Users/register', body, httpOptions);
   }
+
+  getUserProfile(): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        // Include Authorization header if needed
+      }),
+    };
+
+    return this.http.get<any>('https://localhost:7194/api/Users/profile', httpOptions);
+  }
 }

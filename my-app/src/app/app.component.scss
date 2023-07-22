@@ -1,0 +1,21 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.navbar a:not(:last-child), .navbar button:not(:last-child) {
+  margin-right: 10px;
+}
+
+.custom-toolbar {
+  --background: black;
+}
+
+.custom-title {
+  --color: white;
+}
+  
