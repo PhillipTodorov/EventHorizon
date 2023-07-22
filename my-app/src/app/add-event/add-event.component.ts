@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { EventService } from '../services/event.service';
+import { EventService } from '../event.service';
 interface EventForm {
   name: string;
   date: string;
