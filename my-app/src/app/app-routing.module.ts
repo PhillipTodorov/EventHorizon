@@ -4,13 +4,19 @@ import { AddEventComponent } from './add-event/add-event.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { RouterModule, Routes } from '@angular/router';
+import { HomeComponent } from './home/home.component';
+
 
 const routes: Routes = [
-  { path: 'api/Users/add-event', component: AddEventComponent },
-  { path: 'api/Users/login', component: LoginComponent },
-  { path: 'api/Users/register', component: RegisterComponent },
-  { path: '', redirectTo: '/api/Users/login', pathMatch: 'full' },  // default route
+  { path: 'add-event', component: AddEventComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'home', redirectTo: '/home', pathMatch: 'full' },  
+  { path: '', redirectTo: '/home', pathMatch: 'full' },  
+  { path: 'home', component: HomeComponent },
+
 ];
+
 
 @NgModule({
   declarations: [],

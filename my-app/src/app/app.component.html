@@ -6,12 +6,16 @@
 </head>
 <body>
   <header>
-    <nav class="navbar">
-      <a routerLink="/">Home</a>
-      <a routerLink="/add-event">Add Event</a>
-      <a routerLink="/login">Login</a>
-      <a routerLink="/register">Register</a>
-    </nav>
+    <mat-toolbar color="primary">
+      <span class="navbar-left">
+        <button mat-flat-button color="accent" routerLink="/home">Home</button>
+        <button mat-flat-button color="accent" routerLink="/add-event">Add Event</button>
+      </span>
+      <span class="navbar-right">
+        <button mat-flat-button color="accent" routerLink="/login">Login</button>
+        <button mat-flat-button color="accent" routerLink="/register">Register</button>
+      </span>
+    </mat-toolbar>
   </header>
 
   <main>

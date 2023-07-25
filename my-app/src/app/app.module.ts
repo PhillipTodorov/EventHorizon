@@ -12,6 +12,10 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { HomeComponent } from './home/home.component';
 import { MatCardModule } from '@angular/material/card';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 
 @NgModule({
@@ -29,6 +33,9 @@ import { MatCardModule } from '@angular/material/card';
     HttpClientModule, 
     AppRoutingModule,
     MatCardModule, 
+    MatToolbarModule,
+    MatButtonModule,
+    BrowserAnimationsModule,
   ],
   providers: [EventService], 
   bootstrap: [AppComponent]

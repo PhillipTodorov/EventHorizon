@@ -1,0 +1,25 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    height: 70px;  /* Adjust this value to increase or decrease the height of the navbar */
+  }
+  
+  .navbar-color {
+    background-color: black;
+    color: white;
+  }
+  
+  .navbar-left, .navbar-right {
+    display: flex;
+    gap: 1em;
+    align-items: center;  /* This line is to center the items vertically */
+  }
+  
+  .navbar a {
+    color: white;
+  }
+  
+  .navbar a:hover {
+    color: lightgray;
+  }
+  
